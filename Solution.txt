@@ -1,43 +1,22 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class regex {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        final String regex = "\\s[A-Za-z0-9]+\\.?-?\\w+?@\\w+-?\\.?(\\w+)?\\.?(\\w+)?\\.\\w+";
+        final String string = scanner.nextLine();
 
-
-        int[] numbers = Arrays.stream(bf.readLine().split("\\s+"))
-                .mapToInt(Integer::parseInt)
-                .toArray();
-
-        int beginIndex = numbers[0];
-        int endIndex = numbers[1];
-
-        String text = bf.readLine();
-
-        String regex = "\\|<(\\w{"+beginIndex+"})(\\w{1,"+endIndex+"})";
-
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(text);
-
-        List<String> result = new ArrayList<>();
+        final Pattern pattern = Pattern.compile(regex);
+        final Matcher matcher = pattern.matcher(string);
 
         while (matcher.find()) {
-            result.add(matcher.group(2));
+            System.out.println(matcher.group(0)+ " ");
+
         }
-
-
-        System.out.println(String.join(", ",result));
-
-
-
     }
 }
