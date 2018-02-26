@@ -1,0 +1,22 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class regex {
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        String textToCompare = bf.readLine();
+        String[] wholeText = bf.readLine().split("[\\?\\!\\.]");
+        String regex = "\\W("+textToCompare+")\\W";
+        Pattern pattern = Pattern.compile(regex);
+        for (int i = 0; i < wholeText.length; i++){
+            Matcher matcher = pattern.matcher(wholeText[i]);
+            if(matcher.find()){
+                System.out.println(wholeText[i].trim());
+            }
+        }
+    }
+}
