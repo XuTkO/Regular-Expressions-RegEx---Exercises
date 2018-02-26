@@ -1,6 +1,10 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -8,15 +12,32 @@ public class regex {
     public static void main(String[] args) throws IOException {
 
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-        String textToCompare = bf.readLine();
-        String[] wholeText = bf.readLine().split("[\\?\\!\\.]");
-        String regex = "\\W("+textToCompare+")\\W";
+
+
+        int[] numbers = Arrays.stream(bf.readLine().split("\\s+"))
+                .mapToInt(Integer::parseInt)
+                .toArray();
+
+        int beginIndex = numbers[0];
+        int endIndex = numbers[1];
+
+        String text = bf.readLine();
+
+        String regex = "\\|<(\\w{"+beginIndex+"})(\\w{1,"+endIndex+"})";
+
         Pattern pattern = Pattern.compile(regex);
-        for (int i = 0; i < wholeText.length; i++){
-            Matcher matcher = pattern.matcher(wholeText[i]);
-            if(matcher.find()){
-                System.out.println(wholeText[i].trim());
-            }
+        Matcher matcher = pattern.matcher(text);
+
+        List<String> result = new ArrayList<>();
+
+        while (matcher.find()) {
+            result.add(matcher.group(2));
         }
+
+
+        System.out.println(String.join(", ",result));
+
+
+
     }
 }
